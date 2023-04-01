@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(Admincontroller::class)->group(function () {
     Route::get('/logout','destroy')->name('logout');
+    Route::get('/profile','Profile')->name('profile');
+    Route::get('/settings','Settings')->name('settings');
 });
 
 require __DIR__.'/auth.php';

@@ -21,7 +21,7 @@
                <img src="{{asset('logo/deepability.png')}}"  width="260" height="5" class="deepability mx-auto " alt="">
             </div>
             <div class="card-body">
-              <form role="form text-left" method="POST" action="/register">
+              <form role="form text-left" method="POST" action="{{ route('register')}}">
                 @csrf
                 <div class="mb-3">
                   <input type="text" class="form-control" placeholder="Name" name="name" id="name" aria-label="Name" aria-describedby="name" value="{{ old('name') }}">
@@ -34,7 +34,13 @@
                   @error('username')
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                   @enderror
-                </div>
+                </div> 
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Contact" name="contact" id="contact" aria-label="contact" aria-describedby="contact" value="{{ old('contact') }}">
+                  @error('contact')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                  @enderror
+                </div> 
                 <div class="mb-3">
                   <input type="email" class="form-control" placeholder="Email" name="email" id="email" aria-label="Email" aria-describedby="email-addon" value="{{ old('email') }}">
                   @error('email')
@@ -59,7 +65,7 @@
                     I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
                   </label>
                   @error('agreement')
-                    <p class="text-danger text-xs mt-2">First, agree to the Terms and Conditions, then try register again.</p>
+                    
                   @enderror
                 </div>
                 <div class="text-center">
