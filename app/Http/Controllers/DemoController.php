@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\subjects;
 class DemoController extends Controller
 {
     
@@ -20,9 +21,9 @@ class DemoController extends Controller
     }
     public function AdminProfile()
     {
-        
-        
-        $admindata = Admin::find(Auth::guard('admin')->user()->id);
-        return view('admin.admin_profile',compact('admindata'));
+
+
+        $admindata = Admin::find(Auth::user()->id);
+        return view('admin.profile',compact('admindata'));
     }//End method
 }

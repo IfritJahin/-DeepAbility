@@ -2,6 +2,24 @@
 
 @section('content')
 
+<head>
+    <title>BotMan Here</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="">
+</head>
+<body>
+</body>
+<script>
+var botmanWidget = {
+  aboutText: 'DeepAbility',
+  introMessage: 'Hi',   
+  title: 'BotMan Here',
+  mainColor: '#9AA8bf',
+  bubbleBackground:'#CB0C9F',
+
+};
+</script>
+<script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
 
 
 @endsection

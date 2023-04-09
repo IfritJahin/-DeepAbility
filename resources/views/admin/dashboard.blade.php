@@ -1,182 +1,133 @@
 @extends('admin.layouts.user_type.auth')
 
 @section('content')
+<h2 clas="mb-4">Admin DASHBOARD</h2>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addsubjectModal">
+  ADD COURSES
+</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Courses</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if(count((array)$subjects) > 0)
+        @foreach($subjects as $subject)
+          <tr>
+            <td>{{$subject->id}}</td>
+            <td>{{$subject->subject}}</td>
+            <td>
+              <button class="btn btn-info editButon" data-id="{{$subject->id}}" data-subject="{{$subject->subject}}" data-bs-toggle="modal" data-bs-target="#editsubjectModal">Edit</button>
+            </td>
+          </tr>
+        @endforeach
+    @else
+    <tr>
+      <td colspan="4">Course not found!</td>
+    </tr>
+    @endif
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="addsubjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
-<h2>Admin DASHBOARD</h2>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Courses</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="addcourse">
+           @csrf
+        <div class="modal-body">
+        <label>Courses</label>
+             <input type="text" name="subject" placeholder="Enter Subject Name">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      </div>
+ 
+  </div>
+</div>
+
+<!-- editModal -->
+<div class="modal fade" id="editsubjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <form id="edit_course">
+    @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Courses</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <label>Edit Courses</label>
+
+          <input type="text" name="subject" placeholder="Enter Subject Name" id="edit_c" required>
+          <input type="hidden" name="id"  id="editcourse_id">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+            $('#addcourse').submit(function(e){
+          e.preventDefault();
+          var formData=$(this).serialize();
+          $.ajax({url:"{{route('addcourse')}}", type:"POST", data: formData ,
+            success:function(data)
+            {
+              console.log(data);
+              if(data.success == true){
+                location.reload();
+              }
+              else{
+                alert(data.msg);
+              }
+            }
+        });
+      });
+      $(".editButton").click(function(){
+        var course_id=$(this).attr('data-id');
+        var course=$(this).attr('data-course');
+        $("#edit_c").val(course);
+        $("#editcourse_id").val(course_id);
+      });
+        $('#edit_course').submit(function(e){
+        e.preventDefault();
+        var formData=$(this).serialize();
+        $.ajax({url:"{{route('editcourse')}}", type:"POST", data: formData ,
+          success:function(data)
+          {
+            console.log(data);
+            if(data.success == true){
+              location.reload();
+            }
+            else{
+              alert(data.msg);
+            }
+          }
+      });
+    });
+});</script>
 @endsection
 @push('admin.dashboard')
-  <script>
-    window.onload = function() {
-      var ctx = document.getElementById("chart-bars").getContext("2d");
 
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          datasets: [{
-            label: "Sales",
-            tension: 0.4,
-            borderWidth: 0,
-            borderRadius: 4,
-            borderSkipped: false,
-            backgroundColor: "#fff",
-            data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-            maxBarThickness: 6
-          }, ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            }
-          },
-          interaction: {
-            intersect: false,
-            mode: 'index',
-          },
-          scales: {
-            y: {
-              grid: {
-                drawBorder: false,
-                display: false,
-                drawOnChartArea: false,
-                drawTicks: false,
-              },
-              ticks: {
-                suggestedMin: 0,
-                suggestedMax: 500,
-                beginAtZero: true,
-                padding: 15,
-                font: {
-                  size: 14,
-                  family: "Open Sans",
-                  style: 'normal',
-                  lineHeight: 2
-                },
-                color: "#fff"
-              },
-            },
-            x: {
-              grid: {
-                drawBorder: false,
-                display: false,
-                drawOnChartArea: false,
-                drawTicks: false
-              },
-              ticks: {
-                display: false
-              },
-            },
-          },
-        },
-      });
-
-
-      var ctx2 = document.getElementById("chart-line").getContext("2d");
-
-      var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-      gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-      gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
-
-      var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-      gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-      gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
-
-      new Chart(ctx2, {
-        type: "line",
-        data: {
-          labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          datasets: [{
-              label: "Mobile apps",
-              tension: 0.4,
-              borderWidth: 0,
-              pointRadius: 0,
-              borderColor: "#cb0c9f",
-              borderWidth: 3,
-              backgroundColor: gradientStroke1,
-              fill: true,
-              data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-              maxBarThickness: 6
-
-            },
-            {
-              label: "Websites",
-              tension: 0.4,
-              borderWidth: 0,
-              pointRadius: 0,
-              borderColor: "#3A416F",
-              borderWidth: 3,
-              backgroundColor: gradientStroke2,
-              fill: true,
-              data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-              maxBarThickness: 6
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            }
-          },
-          interaction: {
-            intersect: false,
-            mode: 'index',
-          },
-          scales: {
-            y: {
-              grid: {
-                drawBorder: false,
-                display: true,
-                drawOnChartArea: true,
-                drawTicks: false,
-                borderDash: [5, 5]
-              },
-              ticks: {
-                display: true,
-                padding: 10,
-                color: '#b2b9bf',
-                font: {
-                  size: 11,
-                  family: "Open Sans",
-                  style: 'normal',
-                  lineHeight: 2
-                },
-              }
-            },
-            x: {
-              grid: {
-                drawBorder: false,
-                display: false,
-                drawOnChartArea: false,
-                drawTicks: false,
-                borderDash: [5, 5]
-              },
-              ticks: {
-                display: true,
-                color: '#b2b9bf',
-                padding: 20,
-                font: {
-                  size: 11,
-                  family: "Open Sans",
-                  style: 'normal',
-                  lineHeight: 2
-                },
-              }
-            },
-          },
-        },
-      });
-    }
-  </script>
+ 
 @endpush
 

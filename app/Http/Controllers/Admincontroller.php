@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\subjects;
 class Admincontroller extends Controller
 {
     
@@ -65,5 +66,46 @@ class Admincontroller extends Controller
         return view('user.quiz',compact('quizdata'));
 
     }//End method
+    public function Payment()
+    {
+        $id = Auth::user()->id;
+        $paymentdata = User::find($id);
+        return view('user.payment',compact('paymentdata'));
 
+    }//End method
+    public function addcourse(Request $request)
+    {
+        try{
+            subjects::insert([
+                'subject'=>$request->subject
+            ]);
+            return response()->json(['success'=>true,'msg'=>"Course added successfully"]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'msg'=>$e->getmessage()]);
+        }
+      
+    }//End method
+    public function subj()
+    {
+        $subjects = subjects::all();
+        return view('admin.dashboard',compact('subjects'));
+
+    }//End method
+    public function editcourse(Request $request)
+    {
+        try{
+            $subjects = subjects::find($request->id);
+            $subjects->subjects=$request->subjects;
+            $subjects->save();
+            return response()->json(['success'=>true,'msg'=>"Course added successfully"]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'msg'=>$e->getmessage()]);
+        }
+      
+    }//End method
+    public function testdashboard()
+    {
+        return view('admin.quiz');
+
+    }//End method
 }
