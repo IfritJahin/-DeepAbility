@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\subjects;
+use App\Models\payment;
+use Stripe\Charge;
+use Stripe\Api\Api;
 class Admincontroller extends Controller
 {
     
@@ -64,20 +67,36 @@ class Admincontroller extends Controller
         $id = Auth::user()->id;
         $quizdata = User::find($id);
         return view('user.quiz',compact('quizdata'));
-
     }//End method
-    public function Payment()
+    public function Course()
     {
         $id = Auth::user()->id;
-        $paymentdata = User::find($id);
-        return view('user.payment',compact('paymentdata'));
+        $coursedata = User::find($id);
+        return view('user.course',compact('coursedata'));
 
     }//End method
+    public function CourseContent()
+    {
+        $id = Auth::user()->id;
+        $coursecontentdata = User::find($id);
+        return view('user.course_content',compact('coursecontentdata'));
+
+    }//End method
+
     public function addcourse(Request $request)
     {
         try{
+            $plan= $request->plan;
+            $prices = null; 
+            if(isset($request->itk)){
+                $prices=json_encode(['TK'=>$request->itk]);
+            }
             subjects::insert([
-                'subject'=>$request->subject
+                'subject'=>$request->subject,
+                'plan'=>$plan,
+                'prices'=>$prices,
+                'expire'=>$request->expire,
+
             ]);
             return response()->json(['success'=>true,'msg'=>"Course added successfully"]);
         }catch(\Exception $e){
@@ -88,9 +107,15 @@ class Admincontroller extends Controller
     public function subj()
     {
         $subjects = subjects::all();
-        return view('admin.dashboard',compact('subjects'));
+        return view('admin.courses',compact('subjects'));
 
-    }//End method
+    }//End method coursenroll
+    public function coursenroll()
+    {
+        $subjects = subjects::all();
+        return view('user.courses',compact('subjects'));
+
+    }
     public function editcourse(Request $request)
     {
         try{
@@ -107,5 +132,11 @@ class Admincontroller extends Controller
     {
         return view('admin.quiz');
 
+    }//End method
+    public function payment()
+    {
+        $id = Auth::user()->id;
+        $admindata = User::find($id);
+        return view('user.payment',compact('admindata'));
     }//End method
 }

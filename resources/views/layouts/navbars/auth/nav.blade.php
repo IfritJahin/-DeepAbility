@@ -13,7 +13,7 @@
             <div class="ms-md-3 pe-md-3 d-flex align-items-center">
             <div class="input-group">
                 <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Type here...">
+                <input type="search" name="search" id="search" onkeyup="searchTable()" class="form-control" placeholder="Type here...">
             </div>
             </div>
             <ul class="navbar-nav  justify-content-end">
@@ -39,11 +39,6 @@
         @endif
     @else
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('courses.index') }}">{{ __('All Courses') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('courses.my-courses') }}">{{ __('My Courses') }}</a>
-        </li>
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -63,6 +58,30 @@
         </li>
     @endguest
 </ul>
+<script>
+    function searchTable(){
+        var input, filter, table, tr,td,i, txtvalue;
+        input=document.getElementById('search');
+        filter = input.value.toUpperCase();
+        table=document.getElementById('questiontable');
+        tr= table.getElementsByTagName("tr");
+        for(i = 0; i<tr.length ; i++){
+            td = tr[i].getElementsByTagName("td")[1];
+            if(td){
+            txtvalue= td.textContent || td.innerText;
+            if(txtvalue.toUpperCase().indexOf(filter)>-1){
+            tr[i].style.display = "";
+            }
+            else{
+                tr[i].style.display = "none";
+            }
+        }        
+        }
+
+    }
+
+</script>
+
 
 </nav>
 <!-- End Navbar -->

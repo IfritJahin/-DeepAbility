@@ -84,7 +84,7 @@
           <span class="nav-link-text ms-1">Quiz</span>
         </a>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('tables') ? 'active' : '') }}" href="">
+        <a class="nav-link {{ (Request::is('tables') ? 'active' : '') }}" href="{{ route('course')}}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <title>office</title>
@@ -104,7 +104,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('billing') ? 'active' : '') }}" href="{{ route('payment')}}">
+        <a class="nav-link {{ (Request::is('billing') ? 'active' : '') }}" href="{{ url('/payment')}}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <title>credit-card</title>

@@ -1,6 +1,3 @@
-@extends('layouts.user_type.auth')
-
-@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -166,11 +163,11 @@
                     <label class="custom-control-label" for="save-info">Save this information for next time</label>
                 </div>
                 <hr class="mb-4">
-                <button id="sslczPayBtn"
+                <button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
                         token="if you have any token validation"
-                        postdata=""
+                        postdata="your javascript arrays or objects which requires in backend"
                         order="If you already have the transaction generated for current order"
-                        endpoint="/pay-via-ajax"> Pay Now
+                        endpoint="{{ url('/pay-via-ajax') }}"> Pay Now
                 </button>
             </form>
         </div>
@@ -219,9 +216,3 @@
     })(window, document);
 </script>
 </html>
-
-@include('layouts.footers.auth.footer')
-
-@endsection
-
-

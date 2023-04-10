@@ -10,6 +10,9 @@ class subjects extends Model
     use HasFactory;
 
     protected $fillable=[
-        'subjet'
+        'subject',
+        'plan',
+        'prices',
+        'expire'
     ];
 }
