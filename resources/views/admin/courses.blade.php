@@ -16,6 +16,7 @@
       <th scope="col">Edit</th>
       <th scope="col">Plans</th>
       <th scope="col">Prices</th>
+      <th scope="col">Calender</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +26,7 @@
             <td>{{$subject->id}}</td>
             <td>{{$subject->subject}}</td>
             <td>{{$subject->expire}}</td>
-
+            </td>
             <td>
               <button class="btn btn-info editButon" data-id="{{$subject->id}}" data-subject="{{$subject->subject}}" data-bs-toggle="modal" data-bs-target="#editsubjectModal">Edit</button>
             </td>
@@ -45,6 +46,9 @@
                @else
                    <span>No Prices</span>
                @endif
+            </td>
+            <td>
+            <a href="{{ route('coursedashboard') }}" class="btn btn-primary buynow" >Event</button></a>
             </td>
           </tr>
         @endforeach

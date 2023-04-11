@@ -7,6 +7,7 @@ use App\Http\Controllers\DemoController;
 use App\Http\Controllers\BotmanController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\FullCalenderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +46,11 @@ Route::controller(Admincontroller::class)->group(function () {
     Route::post('/editcourse',[Admincontroller::class,'editcourse'])->name('editcourse');
     Route::post('/deletecourse',[Admincontroller::class,'deletecourse'])->name('deletecourse');
     Route::get('/course/content','CourseContent')->name('course.content');
-    Route::get('/course',[Admincontroller::class,'coursenroll'])->name('course');   
+    Route::get('/course',[Admincontroller::class,'coursenroll'])->name('course');  
+    Route::post('/paymentcom','paymentcom')->name('paymentcom');
+    Route::post('/coursecontent','index');
+    Route::post('coursecontent/action', 'action');
+    Route::get('/rough','rough')->name('rough');
 });
 
 require __DIR__.'/auth.php';
@@ -54,12 +59,14 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin'])->name('admin.dashboard');
 Route::middleware('auth:admin')->group(function () {
-    Route::post('/addcourse',[Admincontroller::class,'addcourse'])->name('addcourse');
-    
+    Route::post('/addcourse',[Admincontroller::class,'addcourse'])->name('addcourse'); 
     Route::post('/editcourse',[Admincontroller::class,'editcourse'])->name('editcourse');
     Route::post('/deletecourse',[Admincontroller::class,'deletecourse'])->name('deletecourse');
     Route::get('/admin/courses',[Admincontroller::class,'subj'])->name('coursesdashboard');
-    Route::get('/admin/test',[Admincontroller::class,'testdashboard'])->name('testdashboard');;
+    Route::get('/admin/test',[Admincontroller::class,'testdashboard'])->name('testdashboard');
+    Route::get('/admin/coursecontent',[Admincontroller::class,'coursedashboard'])->name('coursedashboard');
+    Route::get('/coursedashboard', [Admincontroller::class, 'index']);
+    Route::post('/coursedashboard/action', [Admincontroller::class, 'action']);
 });
     
 Route::controller(DemoController::class)->group(function () {
@@ -82,3 +89,6 @@ Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
 Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+Route::get('/', [Admincontroller::class, 'index']);
+Route::post('/manage-event', [Admincontroller::class, 'manageEvent']);
+Route::get('/', [Admincontroller::class, 'index_2']);

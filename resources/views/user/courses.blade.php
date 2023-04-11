@@ -19,6 +19,7 @@
           <tr>
             <td>{{$subject->id}}</td>
             <td>{{$subject->subject}}</td>
+            <td>{{$subject->expire}}</td>
             <td>
                @if($subject->plan !=0)
                    <span style= "color: Red">PAID</span>
@@ -95,7 +96,7 @@
           e.preventDefault();
           var formData=$(this).serialize();
           var price=$('#price').val();
-          $.ajax({url:"{{route('payment')}}", type:"POST", data: formData ,
+          $.ajax({url:"{{route('addcourse')}}", type:"POST", data: formData ,
             success:function(response)
             {
               console.log(response);
@@ -103,17 +104,6 @@
         });
       });
 </script>
-<script>
-    (function (window, document) {
-        var loader = function () {
-            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
-            script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
-            tag.parentNode.insertBefore(script, tag);
-        };
-
-        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-    })(window, document);
-</script>
-@include('layouts.footers.auth.footer')
+@(layouts.footers.auth.footer')
 
 @endsection
