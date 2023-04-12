@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/paymentcom',[Admincontroller::class,'paymentcom'])->name('paymentcom');
 });
 
 Route::controller(Admincontroller::class)->group(function () {
@@ -47,7 +48,8 @@ Route::controller(Admincontroller::class)->group(function () {
     Route::post('/deletecourse',[Admincontroller::class,'deletecourse'])->name('deletecourse');
     Route::get('/course/content','CourseContent')->name('course.content');
     Route::get('/course',[Admincontroller::class,'coursenroll'])->name('course');  
-    Route::post('/paymentcom','paymentcom')->name('paymentcom');
+    Route::get('/dashboard',[Admincontroller::class,'statusall'])->name('dashboard');
+
     Route::post('/coursecontent','index');
     Route::post('coursecontent/action', 'action');
     Route::get('/rough','rough')->name('rough');
@@ -67,6 +69,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/coursecontent',[Admincontroller::class,'coursedashboard'])->name('coursedashboard');
     Route::get('/coursedashboard', [Admincontroller::class, 'index']);
     Route::post('/coursedashboard/action', [Admincontroller::class, 'action']);
+    Route::post('/status',[Admincontroller::class,'status'])->name('status'); 
+    
 });
     
 Route::controller(DemoController::class)->group(function () {

@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Admin;
+use App\Models\dashboards;
 use App\Models\subjects;
-use App\Models\payment;
+use App\Models\payments;
 use Stripe\Charge;
 use Stripe\Api\Api;
 use SnoozeNotifiable;
@@ -146,9 +147,11 @@ class Admincontroller extends Controller
     {
         try{
             //return $request->all();
-
-            $price = $request->price;
-            paymentcom::insert([
+            $price = null; 
+            if(isset($request->price)){
+                $price=json_encode(['TK'=>$request->price]);
+            }
+            payments::insert([
                 'price'=>$price,
             ]);
             
@@ -245,5 +248,24 @@ class Admincontroller extends Controller
         return view('welcome');
     }
 
+    public function status(Request $request)
+    {
+        try{
+            dashboards::insert([
+                'status'=>$request->status,
+                'motivation'=>$request->motivation
 
+            ]);
+            return response()->json(['success'=>true,'msg'=>"Course added successfully"]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'msg'=>$e->getmessage()]);
+        }
+      
+    }//End method
+    public function statusall()
+    {
+        $status = dashboards::all();
+        return view('dashboard',compact('status'));
+
+    }//End method coursenroll
 }

@@ -96,7 +96,7 @@
           e.preventDefault();
           var formData=$(this).serialize();
           var price=$('#price').val();
-          $.ajax({url:"{{route('addcourse')}}", type:"POST", data: formData ,
+          $.ajax({url:"{{route('paymentcom')}}", type:"POST", data: formData ,
             success:function(response)
             {
               console.log(response);

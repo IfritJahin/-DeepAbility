@@ -21,7 +21,70 @@ var botmanWidget = {
 </script>
 <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
 
+@if(count((array)$status) > 0)   
+  @foreach($status as $statuses)
+  <div class="card w-75">
+    <div class="card-body md-10">
+      <h5 class="card-title">Quote</h5>
+      <p class="card-text">{{$statuses->status}}</p>
+    </div>
+  </div>
+  <br></br>
+  <div class="card w-75">
+    <div class="card-body md-10">
+      <h5 class="card-title">Achievement</h5>
+      <p class="card-text">{{$statuses->motivation}}</p>
+    </div>
+  </div>
+  <br></br>
+  @endforeach
+  @else
+  @endif
 
+<!-- Modal -->
+<div class="modal fade" id="addstatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-sm-down">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Questions</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="statusform">
+           @csrf
+        <div class="modal-body">
+        <label>Questions</label>
+             <input type="text" name="status" class="w-100" placeholder="Enter status " required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      </div>
+ 
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+            $('#statusform').submit(function(e){
+          e.preventDefault();
+          var formData=$(this).serialize();
+          $.ajax({url:"{{route('status')}}", type:"POST", data:formData ,
+            success:function(data)
+            {
+              console.log(data);
+              if(data.success == true){
+                location.reload();
+              }
+              else{
+                alert(data.msg);
+              }
+            }
+        });
+      });
+});</script>
 @endsection
 @push('dashboard')
   <script>
