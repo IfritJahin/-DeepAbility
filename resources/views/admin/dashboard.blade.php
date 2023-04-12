@@ -52,8 +52,5 @@
       });
 });</script>
 @endsection
-@push('admin.dashboard')
 
- 
-@endpush
 

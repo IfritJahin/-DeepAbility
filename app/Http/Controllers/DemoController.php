@@ -19,11 +19,11 @@ class DemoController extends Controller
 
         return redirect('/admin/login');
     }
-    public function AdminProfile()
+    public function AdminProfile(Request $request)
     {
 
-
-        $admindata = Admin::find(Auth::user()->id);
+        $id = Admin::find($request->id);
+        $id->id=$request->id;
         return view('admin.profile',compact('admindata'));
     }//End method
 }

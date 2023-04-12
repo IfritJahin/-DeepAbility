@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/payment',[Admincontroller::class,'payment'])->name('payment');
     Route::post('/paymentcom',[Admincontroller::class,'paymentcom'])->name('paymentcom');
 });
 
@@ -70,6 +71,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/coursedashboard', [Admincontroller::class, 'index']);
     Route::post('/coursedashboard/action', [Admincontroller::class, 'action']);
     Route::post('/status',[Admincontroller::class,'status'])->name('status'); 
+    Route::get('/admin/payment',[Admincontroller::class,'adminpayment'])->name('adminpayment');
     
 });
     
@@ -82,7 +84,7 @@ Route::match(['get','post'],'/botman',[BotmanController::class,'handle']);
 
 require __DIR__.'/adminauth.php';
 
-Route::get('/payment', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
 Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
 
 Route::post('/pay', [SslCommerzPaymentController::class, 'index']);

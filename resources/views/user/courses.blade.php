@@ -33,7 +33,7 @@
                   @foreach($planprices as $key=>$price)
                     <span>{{$key}} {{$price}},</span>
                     <td>
-                       <a href="{{route('course.content')}}" class="btn btn-primary buynow" data-prices="{{$subject->prices}}" data-bs-toggle="modal" data-bs-target="#buyModal">Enroll</button></a>
+                       <a href="{{route('payment')}}" class="btn btn-primary buynow" data-prices="{{$subject->prices}}" data-bs-toggle="modal" data-bs-target="#buyModal">Enroll</button></a>
                     </td>
                   @endforeach
                @else
@@ -70,7 +70,7 @@
             </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-warning buynowbutton">BUY NOW</button>
+          <a href="{{route('payment')}}" type="button" class="btn btn-warning buynowbutton">BUY NOW</a>
         </div>
         </form>
       </div>

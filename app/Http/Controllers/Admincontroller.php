@@ -143,24 +143,6 @@ class Admincontroller extends Controller
         return view('user.payment',compact('admindata'));
     }//End method
    
-    public function paymentcom(Request $request)
-    {
-        try{
-            //return $request->all();
-            $price = null; 
-            if(isset($request->price)){
-                $price=json_encode(['TK'=>$request->price]);
-            }
-            payments::insert([
-                'price'=>$price,
-            ]);
-            
-            return response()->json(['success'=>true,'msg'=>"Course added successfully"]);
-        }catch(\Exception $e){
-            return response()->json(['success'=>false,'msg'=>$e->getmessage()]);
-        }
-      
-    }//End method
     public function rough()
     {
    
@@ -266,6 +248,34 @@ class Admincontroller extends Controller
     {
         $status = dashboards::all();
         return view('dashboard',compact('status'));
+
+    }//End method coursenroll
+
+    public function paymentcom(Request $request)
+    {
+        try{
+            $priceway= $request->priceway;
+            $prices = null; 
+            if(isset($request->itk)){
+                $prices=json_encode(['TK'=>$request->itk]);
+            }
+            payments::insert([
+                'name'=>$request->name,
+                'subject'=>$request->subject,
+                'priceway'=>$request->priceway,
+                'prices'=>$prices,
+            ]);
+            
+            return response()->json(['success'=>true,'msg'=>"Course added successfully"]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'msg'=>$e->getmessage()]);
+        }
+
+    }//End method
+    public function adminpayment()
+    {
+        $payments = payments::all();
+        return view('admin.payment',compact('payments'));
 
     }//End method coursenroll
 }

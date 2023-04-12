@@ -17,18 +17,18 @@
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                User Name: {{$admindata->username}}
+                User Name: {{$id->username}}
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
                 CEO / Co-Founder
               </p>
               <hr>
               <h5 class="mb-1">
-                User email: {{$admindata->email}}
+                User email: {{$id->email}}
               </h5>
               <hr>
               <h5 class="mb-1">
-                User Number: {{$admindata->contact}}
+                User Number: {{$id->contact}}
               </h5>
               <hr>
               <a href="" button class="btn btn-primary" type="button">Edit Profile</button></a>
